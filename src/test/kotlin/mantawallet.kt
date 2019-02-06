@@ -1,20 +1,13 @@
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import java.math.BigDecimal
-import com.google.gson.JsonPrimitive
-import com.google.gson.JsonSerializationContext
-import com.google.gson.JsonElement
-import com.google.gson.JsonSerializer
-import demo.*
+import manta.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.withTimeout
 import org.eclipse.paho.client.mqttv3.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.lang.reflect.Type
 
 val DESTINATIONS = listOf(
         Destination(amount = BigDecimal(5),
@@ -52,6 +45,13 @@ class MYTests : StringSpec() {
             result[2] shouldBe "123"
         }
 
+        "Parse NFC Url" {
+            val result = MantaWallet.parseURL("http://manta.appia.co/127.0.0.1:8000/123")
+            result[0] shouldBe "127.0.0.1"
+            result[1] shouldBe "8000"
+            result[2] shouldBe "123"
+        }
+
         "Parse invalid url" {
             val result = MantaWallet.parseURL("manta://localhost")
             result.count() shouldBe 0
@@ -75,11 +75,11 @@ class MYTests : StringSpec() {
         "Test get payment request" {
             val client = mockk<MqttClient>(relaxed = true)
 
-            val wallet = MantaWallet.factory("manta://localhost:8000/123", client)
+            val wallet = MantaWallet.factory("manta://localhost:8000/123", client = client)
 
             verify { client.setCallback(any()) }
 
-            every { client.publish("payment_requests/123/BTC", any()) } answers {
+            every { client.publish("payment_requests/123/BTC", any(), 1, false) } answers {
                 val message = MqttMessage(MESSAGE.getEnvelope().toJSON()!!.toByteArray())
                 wallet?.messageArrived("payment_requests/123", message)
             }
@@ -100,7 +100,7 @@ class MYTests : StringSpec() {
         "Test send payment" {
             val client = mockk<MqttClient>(relaxed = true)
 
-            val wallet = MantaWallet.factory("manta://localhost:8000/123", client)
+            val wallet = MantaWallet.factory("manta://localhost:8000/123", client= client)
 
             val expected = PaymentMessage(
                     transactionHash = "myhash",

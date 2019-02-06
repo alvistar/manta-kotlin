@@ -1,16 +1,10 @@
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitStringResponseResult
-import com.github.kittinunf.fuel.json.responseJson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import demo.MantaWallet
-import demo.PaymentRequestEnvelope
+import manta.MantaWallet
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.math.BigDecimal
 
 val STOREURL = "http://localhost:8080/"

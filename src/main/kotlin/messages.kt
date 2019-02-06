@@ -1,8 +1,7 @@
-package demo
+package manta
 
 import com.google.gson.*
 import java.math.BigDecimal
-import java.util.*
 import com.google.gson.annotations.SerializedName;
 import java.lang.reflect.Type
 
