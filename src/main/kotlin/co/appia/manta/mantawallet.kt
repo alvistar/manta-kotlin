@@ -8,6 +8,7 @@ import mu.KotlinLogging
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence
 import java.util.concurrent.CompletableFuture
 
+
 val LOG = KotlinLogging.logger {}
 
 class MantaWallet(val sessionID: String,
@@ -34,7 +35,7 @@ class MantaWallet(val sessionID: String,
 
         }
 
-        fun factory(url: String,
+        @JvmOverloads fun factory(url: String,
                     persistence: MqttClientPersistence = MqttDefaultFilePersistence(),
                     client: MqttClient? = null): MantaWallet? {
             val result = MantaWallet.parseURL(url)
@@ -123,9 +124,17 @@ class MantaWallet(val sessionID: String,
 
     }
 
+    // https://stackoverflow.com/questions/52869672/call-kotlin-suspend-function-in-java-class
+
     fun getPaymentRequestAsync(cryptoCurrency: String = "all"): CompletableFuture<PaymentRequestEnvelope?> {
         return GlobalScope.future { getPaymentRequest(cryptoCurrency) }
+
     }
+
+    fun getPaymentRequestSync(cryptoCurrency: String = "all"): PaymentRequestEnvelope?{
+        return runBlocking { getPaymentRequest(cryptoCurrency) }
+    }
+
 
     fun sendPayment(transactionHash: String, cryptoCurrency: String) {
         connect()
