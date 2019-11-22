@@ -2,7 +2,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitStringResponseResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import manta.MantaWallet
+import co.appia.manta.MantaWallet
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import java.math.BigDecimal

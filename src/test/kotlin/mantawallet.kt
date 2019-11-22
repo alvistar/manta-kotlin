@@ -1,7 +1,7 @@
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import java.math.BigDecimal
-import manta.*
+import co.appia.manta.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

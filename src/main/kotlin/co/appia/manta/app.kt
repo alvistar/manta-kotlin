@@ -1,4 +1,4 @@
-package manta
+package co.appia.manta
 
 
 fun main(args: Array<String>) {

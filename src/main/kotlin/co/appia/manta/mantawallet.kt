@@ -1,9 +1,9 @@
-package manta
+package co.appia.manta
 
 import org.eclipse.paho.client.mqttv3.*
 import java.util.regex.Pattern
 import kotlinx.coroutines.*
- import kotlinx.coroutines.future.future
+import kotlinx.coroutines.future.future
 import mu.KotlinLogging
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence
 import java.util.concurrent.CompletableFuture
@@ -132,7 +132,7 @@ class MantaWallet(val sessionID: String,
 
         client.subscribe("acks/$sessionID")
 
-        val message = PaymentMessage (
+        val message = PaymentMessage(
                 transactionHash = transactionHash,
                 cryptoCurrency = cryptoCurrency
         )

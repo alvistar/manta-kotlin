@@ -1,4 +1,4 @@
-package manta
+package co.appia.manta
 
 import com.google.gson.*
 import java.math.BigDecimal
@@ -64,10 +64,10 @@ data class PaymentRequestEnvelope(val message: String,
                                   val signature: String,
                                   val version: String = MANTAVERSION) : Message() {
     fun unpack(): PaymentRequestMessage? {
-        return Message.fromJSON<PaymentRequestMessage>(this.message)
+        return fromJSON<PaymentRequestMessage>(this.message)
     }
 }
 
 data class PaymentMessage(@SerializedName ("crypto_currency") val cryptoCurrency: String,
                           @SerializedName ("transaction_hash") val transactionHash: String,
-                          val version: String = MANTAVERSION): Message ()
+                          val version: String = MANTAVERSION): Message()
